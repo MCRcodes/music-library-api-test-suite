@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const Artist = require('../src/models/artist');
+const Artist = require('../src/models/artist.js');
 
 describe('/artists', () => {
   afterEach((done) => {
@@ -9,7 +9,7 @@ describe('/artists', () => {
   });
 
   describe('POST /artists', () => {
-    xit('creates a new artist in the database', (done) => {
+    it('creates a new artist in the database', (done) => {
       chai.request(server)
         .post('/artists')
         .send({
