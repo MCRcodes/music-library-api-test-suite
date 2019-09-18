@@ -1,6 +1,6 @@
 const Artist = require('../src/models/artist');
 const Album = require('../src/models/album');
-const Song = require('../src/models/song');
+//const Song = require('../src/models/song');
 
 describe('Songs', () => {
   let artistId;
