@@ -44,7 +44,7 @@ describe('/artists', () => {
     });
 
     describe('GET /artists', () => {
-      xit('gets all artist records', (done) => {
+      it('gets all artist records', (done) => {
         chai.request(server)
           .get('/artists')
           .end((err, res) => {
