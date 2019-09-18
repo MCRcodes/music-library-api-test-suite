@@ -16,8 +16,10 @@ describe('/albums', () => {
   });
 
   afterEach((done) => {
-    mongoose.connection.dropDatabase(() => {
-      done();
+    Artist.deleteMany({}, () => {
+      Album.deleteMany({}, () => {
+        done();
+      });
     });
   });
 

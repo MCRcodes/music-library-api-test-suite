@@ -3,7 +3,7 @@ const Artist = require('../src/models/artist');
 
 describe('/artists', () => {
   afterEach((done) => {
-    mongoose.connection.dropDatabase(() => {
+    Artist.deleteMany({}, () => {
       done();
     });
   });
