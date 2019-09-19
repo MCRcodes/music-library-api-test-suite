@@ -11,3 +11,18 @@ exports.create = (req, res) => {
     res.status(201).json(artist);
   });
 };
+
+
+exports.list = (req, res) => {
+  Artist.find({}, (err, artists) => {
+    res.status(200).json(artists);
+  });
+};
+
+exports.single = (req, res) => {
+  Artist.findById()
+    .where('_id').equals(req.params.id)
+    .exec((err, artists) => {
+      res.status(200).json(artists);
+    });
+};

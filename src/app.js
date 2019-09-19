@@ -10,4 +10,8 @@ app.get('/', (req, res) => {
 
 app.post('/artists', artistsController.create);
 
+app.get('/artists', artistsController.list);
+
+app.get('/artists/:id', artistsController.single);
+
 module.exports = app;
