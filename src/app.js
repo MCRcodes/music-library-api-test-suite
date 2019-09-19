@@ -12,6 +12,6 @@ app.post('/artists', artistsController.create);
 
 app.get('/artists', artistsController.list);
 
-app.get('/artists/:id', artistsController.single);
+app.get('/artists/:id', artistsController.find);
 
 module.exports = app;

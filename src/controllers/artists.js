@@ -19,10 +19,14 @@ exports.list = (req, res) => {
   });
 };
 
-exports.single = (req, res) => {
-  Artist.findById()
+exports.find = (req, res) => {
+  Artist.findOne()
     .where('_id').equals(req.params.id)
-    .exec((err, artists) => {
-      res.status(200).json(artists);
+    .exec((err, artist) => {
+      if (!artist) {
+        res.status(404).json({ error: 'The artist could not be found.' });
+      } else {
+        res.status(200).json(artist);
+      }
     });
 };
