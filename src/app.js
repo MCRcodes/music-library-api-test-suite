@@ -12,6 +12,8 @@ app.post('/artists', artistsController.create);
 
 app.get('/artists', artistsController.list);
 
-app.get('/artists/:id', artistsController.find);
+app.get('/artists/:id', artistsController.find)
+
+app.patch('/artists/:id', artistsController.update);
 
 module.exports = app;

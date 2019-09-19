@@ -89,7 +89,7 @@ describe('/artists', () => {
     });
 
     describe('PATCH /artists/:artistId', () => {
-      xit('updates artist record by id', (done) => {
+      it('updates artist record by id', (done) => {
         const artist = artists[0];
         chai.request(server)
           .patch(`/artists/${artist._id}`)
@@ -104,7 +104,23 @@ describe('/artists', () => {
           });
       });
 
-      xit('returns a 404 if the artist does not exist', (done) => {
+      it('updates artist name by id', (done) => {
+        const artist = artists[0];
+        chai.request(server)
+          .patch(`/artists/${artist._id}`)
+          .send({ name: 'Metallica' })
+          .end((err, res) => {
+            expect(err).to.equal(null);
+            expect(res.status).to.equal(200);
+            Artist.findById(artist._id, (err, updatedArtist) => {
+              expect(updatedArtist.name).to.equal('Metallica');
+              expect(updatedArtist.genre).to.equal(artist.genre);
+              done();
+            });
+          });
+      });
+
+      it('returns a 404 if the artist does not exist', (done) => {
         chai.request(server)
           .patch('/artists/12345')
           .send({ genre: 'Psychedelic Rock' })
