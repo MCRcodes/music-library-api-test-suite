@@ -17,3 +17,13 @@ exports.list = (req, res) => {
     res.status(200).send(artists);
   });
 };
+
+exports.find = (req, res) => {
+  Artist.findById(req.params.artistId, (err, Aid) => {
+    if (!Aid) {
+      res.status(404).json({ error: 'The artist could not be found.' });
+    } else {
+      res.status(200).json(Aid);
+    }
+  });
+};
