@@ -55,3 +55,16 @@ exports.update = (req, res) => {
       }
     });
 };
+
+
+exports.delete = (req, res) => {
+  Artist.findOneAndDelete()
+    .where('_id').equals(req.params.id)
+    .exec((err, artist) => {
+      if (!artist) {
+        res.status(404).json({ error: 'The artist could not be found.' });
+      } else {
+        res.status(204).json(artist);
+      }
+    });
+};
