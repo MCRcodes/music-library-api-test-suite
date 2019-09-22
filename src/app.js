@@ -23,6 +23,8 @@ app.post('/artists/:id/albums', albumController.create);
 
 app.get('/albums', albumController.list);
 
+app.get('/albums/:id', albumController.find);
+
 app.get('/artists/:id/albums', albumController.findByArtist);
 
 module.exports = app;

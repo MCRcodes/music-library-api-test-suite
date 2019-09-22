@@ -21,6 +21,18 @@ exports.list = (req, res) => {
   });
 };
 
+exports.find = (req, res) => {
+  Album.findOne()
+    .where('_id').equals(req.params.id)
+    .exec((err, album) => {
+      if (!album) {
+        res.status(404).json({ error: 'The album could not be found.' });
+      } else {
+        res.status(200).json(album);
+      }
+    });
+};
+
 exports.findByArtist = (req, res) => {
   console.log(Album.artist);
   Album.find()
