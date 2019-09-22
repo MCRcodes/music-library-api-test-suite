@@ -14,3 +14,18 @@ exports.create = (req, res) => {
     });
   }
 };
+
+exports.list = (req, res) => {
+  Album.find({}, (err, albums) => {
+    res.status(200).json(albums);
+  });
+};
+
+exports.findByArtist = (req, res) => {
+  console.log(Album.artist);
+  Album.find()
+    .where('artist').equals(req.params.id)
+    .exec((err, albums) => {
+      res.status(200).json(albums);
+    });
+};
