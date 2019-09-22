@@ -24,7 +24,7 @@ describe('/albums', () => {
   });
 
   describe('POST /artists/:artistId/albums', () => {
-    xit('creates a new album for a given artist', (done) => {
+    it('creates a new album for a given artist', (done) => {
       chai.request(server)
         .post(`/artists/${artist._id}/albums`)
         .send({
@@ -45,7 +45,7 @@ describe('/albums', () => {
         });
     });
 
-    xit('returns a 404 and does not create an album if the artist does not exist', (done) => {
+    it('returns a 404 and does not create an album if the artist does not exist', (done) => {
       chai.request(server)
         .post('/artists/1234/albums')
         .send({

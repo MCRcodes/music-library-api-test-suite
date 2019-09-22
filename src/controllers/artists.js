@@ -1,6 +1,5 @@
 const Artist = require('../models/artist');
 
-
 exports.create = (req, res) => {
   const artist = new Artist({
     name: req.body.name,
@@ -11,7 +10,6 @@ exports.create = (req, res) => {
     res.status(201).json(artist);
   });
 };
-
 
 exports.list = (req, res) => {
   Artist.find({}, (err, artists) => {
@@ -55,7 +53,6 @@ exports.update = (req, res) => {
       }
     });
 };
-
 
 exports.delete = (req, res) => {
   Artist.findOneAndDelete()
