@@ -34,10 +34,13 @@ exports.find = (req, res) => {
 };
 
 exports.findByArtist = (req, res) => {
-  console.log(Album.artist);
   Album.find()
     .where('artist').equals(req.params.id)
     .exec((err, albums) => {
-      res.status(200).json(albums);
+      if (!albums) {
+        res.status(404).json({ error: 'The artist could not be found.' });
+      } else {
+        res.status(200).json(albums);
+      }
     });
 };
