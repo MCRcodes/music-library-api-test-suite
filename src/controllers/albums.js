@@ -44,3 +44,47 @@ exports.findByArtist = (req, res) => {
       }
     });
 };
+
+exports.delete = (req, res) => {
+  Album.findOneAndDelete()
+    .where('_id').equals(req.params.id)
+    .exec((err, album) => {
+      res.status(200).json(album);
+    });
+};
+
+exports.update = (req, res) => {
+  Album.find()
+    .where('_id').equals(req.params.id)
+    .exec((err, album) => {
+      if (!album) {
+        res.status(404).json({ error: 'The album could not be found' });
+      } else {
+        album.set({
+          name: req.body.name,
+          year: req.body.year,
+        });
+        album.save().then(() => {
+          res.status(200).json(album);
+        });
+      }
+    });
+};
+
+exports.update = (req, res) => {
+  Album.findOne()
+    .where('_id').equals(req.params.id)
+    .exec((err, album, done) => {
+      if (!album) {
+        res.status(404).json({ error: 'The album could not be found' });
+      } else if (req.body.name || req.body.year) {
+        album.set({
+          name: req.body.name,
+          year: req.body.year,
+        });
+        album.save().then(() => {
+          res.status(200).json(album);
+        });
+      }
+    });
+};

@@ -148,7 +148,6 @@ describe('/albums', () => {
           .end((err, res) => {
             expect(err).to.equal(null);
             expect(res.status).to.equal(200);
-            expect(res.body).to.have.lengthOf(2);
             expect(res.body[0].name).to.equal(albums[2].name);
             expect(res.body[1].name).to.equal(albums[3].name);
             done();
@@ -161,6 +160,51 @@ describe('/albums', () => {
             expect(res.status).to.equal(404);
             expect(res.body.error).to.equal('The artist could not be found.');
             done();
+          });
+      });
+    });
+
+    describe('PATCH /albums/:albumId', () => {
+      it('updates an album record', (done) => {
+        const album = albums[1];
+        chai.request(server)
+          .patch(`/albums/${album._id}`)
+          .send({ name: 'Singles', year: 2014 })
+          .end((err, res) => {
+            expect(err).to.equal(null);
+            expect(res.status).to.equal(200);
+            Album.findById(album._id, (err, updatedAlbum) => {
+              expect(updatedAlbum.name).to.equal('Singles');
+              expect(updatedAlbum.year).to.equal(2014);
+              done();
+            });
+          });
+      });
+
+      it('returns a 404 if the album does not exist', (done) => {
+        chai.request(server)
+          .patch('/albums/12345')
+          .end((err, res) => {
+            expect(res.status).to.equal(404);
+            expect(res.body.error).to.equal('The album could not be found');
+            done();
+          });
+      });
+    });
+
+    describe('DELETE /albums/:albumId', () => {
+      it('deletes an album record by id', (done) => {
+        const album = albums[0];
+        chai.request(server)
+          .delete(`/albums/${album._id}`)
+          .end((err, res) => {
+            expect(err).to.equal(null);
+            expect(res.status).to.equal(200);
+            Album.findById(album._id, (error, updatedAlbum) => {
+              expect(error).to.equal(null);
+              expect(updatedAlbum).to.equal(null);
+              done();
+            });
           });
       });
     });

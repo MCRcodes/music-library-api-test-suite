@@ -27,4 +27,8 @@ app.get('/albums/:id', albumController.find);
 
 app.get('/artists/:id/albums', albumController.findByArtist);
 
+app.patch('/albums/:id', albumController.update);
+
+app.delete('/albums/:id', albumController.delete);
+
 module.exports = app;
