@@ -74,7 +74,7 @@ exports.update = (req, res) => {
 exports.update = (req, res) => {
   Album.findOne()
     .where('_id').equals(req.params.id)
-    .exec((err, album, done) => {
+    .exec((err, album) => {
       if (!album) {
         res.status(404).json({ error: 'The album could not be found' });
       } else if (req.body.name || req.body.year) {
