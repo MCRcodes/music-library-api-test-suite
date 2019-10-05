@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const Artist = require('../src/models/artist');
+const Artist = require('../src/models/artist.js');
 
 describe('/artists', () => {
   afterEach((done) => {
@@ -9,7 +9,7 @@ describe('/artists', () => {
   });
 
   describe('POST /artists', () => {
-    xit('creates a new artist in the database', (done) => {
+    it('creates a new artist in the database', (done) => {
       chai.request(server)
         .post('/artists')
         .send({
@@ -44,7 +44,7 @@ describe('/artists', () => {
     });
 
     describe('GET /artists', () => {
-      xit('gets all artist records', (done) => {
+      it('gets all artist records', (done) => {
         chai.request(server)
           .get('/artists')
           .end((err, res) => {
@@ -63,7 +63,7 @@ describe('/artists', () => {
     });
 
     describe('GET /artist/:artistId', () => {
-      xit('gets artist record by id', (done) => {
+      it('gets artist record by id', (done) => {
         const artist = artists[0];
         chai.request(server)
           .get(`/artists/${artist._id}`)
@@ -76,7 +76,7 @@ describe('/artists', () => {
           });
       });
 
-      xit('returns a 404 if the artist does not exist', (done) => {
+      it('returns a 404 if the artist does not exist', (done) => {
         chai.request(server)
           .get('/artists/12345')
           .end((err, res) => {
@@ -89,7 +89,7 @@ describe('/artists', () => {
     });
 
     describe('PATCH /artists/:artistId', () => {
-      xit('updates artist record by id', (done) => {
+      it('updates artist record by id', (done) => {
         const artist = artists[0];
         chai.request(server)
           .patch(`/artists/${artist._id}`)
@@ -104,7 +104,7 @@ describe('/artists', () => {
           });
       });
 
-      xit('returns a 404 if the artist does not exist', (done) => {
+      it('returns a 404 if the artist does not exist', (done) => {
         chai.request(server)
           .patch('/artists/12345')
           .send({ genre: 'Psychedelic Rock' })
@@ -118,7 +118,7 @@ describe('/artists', () => {
     });
 
     describe('DELETE /artists/:artistId', () => {
-      xit('deletes artist record by id', (done) => {
+      it('deletes artist record by id', (done) => {
         const artist = artists[0];
         chai.request(server)
           .delete(`/artists/${artist._id}`)
@@ -133,7 +133,7 @@ describe('/artists', () => {
           });
       });
 
-      xit('returns a 404 if the artist does not exist', (done) => {
+      it('returns a 404 if the artist does not exist', (done) => {
         chai.request(server)
           .delete('/artists/12345')
           .end((err, res) => {

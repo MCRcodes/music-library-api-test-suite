@@ -24,7 +24,7 @@ describe('/albums', () => {
   });
 
   describe('POST /artists/:artistId/albums', () => {
-    xit('creates a new album for a given artist', (done) => {
+    it('creates a new album for a given artist', (done) => {
       chai.request(server)
         .post(`/artists/${artist._id}/albums`)
         .send({
@@ -45,7 +45,7 @@ describe('/albums', () => {
         });
     });
 
-    xit('returns a 404 and does not create an album if the artist does not exist', (done) => {
+    it('returns a 404 and does not create an album if the artist does not exist', (done) => {
       chai.request(server)
         .post('/artists/1234/albums')
         .send({
@@ -63,6 +63,70 @@ describe('/albums', () => {
             done();
           });
         });
+    });
+  });
+
+  describe('with albums in the database', () => {
+    let albums;
+    beforeEach((done) => {
+      Promise.all([
+        Album.create({ name: 'InnerSpeaker', year: 2010 }),
+      ]).then((documents) => {
+        albums = documents;
+        done();
+      });
+    });
+
+    describe('GET /albums', () => {
+      it('gets all album records', (done) => {
+        chai.request(server)
+          .get('/artists/:artistId/albums')
+          .end((err, res) => {
+            expect(err).to.equal(null);
+            expect(res.status).to.equal(200);
+            expect(res.body).to.have.lengthOf(1);
+
+            res.body.forEach((album) => {
+              const expected = albums.find(a => a._id.toString() === album._id);
+              expect(album.name).to.equal(expected.name);
+              expect(album.year).to.equal(expected.year);
+            });
+            done();
+          });
+      });
+    });
+
+    describe('PATCH /albums/:albumId', () => {
+      it('updates album record by id', (done) => {
+        const album = albums[0];
+        chai.request(server)
+          .patch(`/artists/${artist._id}/albums/${album._id}`)
+          .send({ year: 1999 })
+          .end((err, res) => {
+            expect(err).to.equal(null);
+            expect(res.status).to.equal(200);
+            Album.findById(album._id, (err, updatedAlbum) => {
+              expect(updatedAlbum.year).to.equal(1999);
+              done();
+            });
+          });
+      });
+    });
+    describe('DELETE /albums/:albumId', () => {
+      it('deletes artist record by id', (done) => {
+        const album = albums[0];
+        chai.request(server)
+          .delete(`/artists/${artist._id}/albums/${album._id}`)
+          .end((err, res) => {
+            expect(err).to.equal(null);
+            expect(res.status).to.equal(204);
+            Album.findById(artist._id, (error, updatedAlbum) => {
+              expect(error).to.equal(null);
+              expect(updatedAlbum).to.equal(null);
+              done();
+            });
+          });
+      });
     });
   });
 });
